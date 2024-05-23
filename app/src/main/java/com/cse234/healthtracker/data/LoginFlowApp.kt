@@ -1,4 +1,4 @@
-package com.cse234.healthtracker.Data
+package com.cse234.healthtracker.data
 
 import android.app.Application
 import com.google.firebase.FirebaseApp
