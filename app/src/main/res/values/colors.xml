@@ -14,4 +14,6 @@
     <color name="bottom_tab_bar">#D5D1A6</color>
     <color name="user_page_bg">#EDBC7C</color>
     <color name="fade_black">#F24A4337</color>
+    <color name="home_screen_bg">#F232291B</color>
+    <color name="trans">#00000000</color>
 </resources>
