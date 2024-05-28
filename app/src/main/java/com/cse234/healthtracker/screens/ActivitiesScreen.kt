@@ -123,7 +123,7 @@ fun ActivitiesScreen(navController : NavHostController, activityViewModel: Activ
                     .padding(horizontal = 24.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Image(
+                Image( // SELECTED ACTIVITY HISTORY
                     Icons.TwoTone.DateRange,
                     contentDescription = "",
                     modifier = Modifier.size(30.dp)
