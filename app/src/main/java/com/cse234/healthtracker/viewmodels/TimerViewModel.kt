@@ -19,6 +19,7 @@ class TimerViewModel : ViewModel() {
 
 
 
+
     fun startTimer() {
         timerJob?.cancel()
         startTime = System.currentTimeMillis()
@@ -43,5 +44,6 @@ class TimerViewModel : ViewModel() {
     override fun onCleared() {
         super.onCleared()
         timerJob?.cancel()
+        _timer.value = 0
     }
 }
