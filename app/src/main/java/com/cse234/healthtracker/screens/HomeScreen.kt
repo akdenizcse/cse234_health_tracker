@@ -355,7 +355,7 @@ fun CircularProgressBar(
 
             Column (
             ){
-                Spacer(modifier = Modifier.height(40.dp))
+                Spacer(modifier = Modifier.height(20.dp))
                 Row(){
                     Icon(Icons.Filled.Star, contentDescription ="" , tint = color1)
                     Spacer(modifier = Modifier.width(5.dp))
