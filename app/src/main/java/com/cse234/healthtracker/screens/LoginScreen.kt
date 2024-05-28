@@ -41,6 +41,7 @@ import androidx.compose.ui.res.painterResource
 
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -197,7 +198,8 @@ fun LoginProcedure(navController: NavHostController) {
                     text = "Email...",
                     color = colorResource(R.color.white)
                 )
-            }
+            },
+            maxLines = 1
         )
         Spacer(modifier = Modifier.height(15.dp))
         OutlinedTextField(
@@ -207,8 +209,10 @@ fun LoginProcedure(navController: NavHostController) {
                 Text(
                     text = "Password...",
                     color = colorResource(R.color.white)
-                )
-            })
+                ) },
+            maxLines = 1,
+            visualTransformation = PasswordVisualTransformation()
+        )
         Spacer(modifier = Modifier.height(48.dp))
         Button(
             onClick = {
@@ -302,7 +306,8 @@ fun RegisterProcedure(navController: NavHostController) {
                     text = "First name...",
                     color = colorResource(R.color.white)
                 )
-            }
+            },
+            maxLines = 1
         )
         Spacer(modifier = Modifier.height(10.dp))
         OutlinedTextField(
@@ -313,7 +318,8 @@ fun RegisterProcedure(navController: NavHostController) {
                     text = "Last name...",
                     color = colorResource(R.color.white)
                 )
-            }
+            },
+            maxLines = 1
         )
         Spacer(modifier = Modifier.height(10.dp))
         OutlinedTextField(
@@ -324,7 +330,8 @@ fun RegisterProcedure(navController: NavHostController) {
                     text = "Email...",
                     color = colorResource(R.color.white)
                 )
-            }
+            },
+            maxLines = 1
         )
         Spacer(modifier = Modifier.height(10.dp))
         OutlinedTextField(
@@ -334,8 +341,9 @@ fun RegisterProcedure(navController: NavHostController) {
                 Text(
                     text = "Password...",
                     color = colorResource(R.color.white)
-                )
-            })
+                )},
+            visualTransformation = PasswordVisualTransformation()
+        )
         Spacer(modifier = Modifier.height(30.dp))
         Button(
             onClick = {
