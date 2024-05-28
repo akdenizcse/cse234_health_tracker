@@ -16,4 +16,7 @@
     <color name="fade_black">#F24A4337</color>
     <color name="home_screen_bg">#F232291B</color>
     <color name="trans">#00000000</color>
+    <color name="transgreen">#1AD36C</color>
+    <color name="transblue">#49AFF3</color>
+    <color name="transyellow">#E3D92D</color>
 </resources>
