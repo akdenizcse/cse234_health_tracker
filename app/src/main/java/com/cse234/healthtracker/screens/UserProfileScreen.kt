@@ -2,6 +2,7 @@ package com.cse234.healthtracker.screens
 
 
 import BottomNavigationBar
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -33,6 +34,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
@@ -42,11 +45,39 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.cse234.healthtracker.R
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.firestore
 
 
 @Composable
 fun UserProfileScreen(navController : NavHostController) {
 
+    val auth = FirebaseAuth.getInstance()
+    val db = Firebase.firestore
+    val userId = auth.currentUser?.uid
+    val firstName = remember { mutableStateOf("User") }
+    val lastName = remember { mutableStateOf("Name") }
+
+    if (userId != null) {
+        db.collection("users")
+            .document(userId)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    firstName.value = document.getString("firstName").toString()
+                    lastName.value = document.getString("lastName").toString()
+
+                    Log.d("SIGNIN", "User Info: $firstName $lastName")
+                } else {
+                    Log.d("SIGNIN", "No such document")
+                }
+
+            }
+            .addOnFailureListener { exception ->
+                Log.d("SIGNIN", "get failed with ", exception)
+            }
+    }
 
     Scaffold(
         bottomBar = {
@@ -86,7 +117,10 @@ fun UserProfileScreen(navController : NavHostController) {
                         )
                         Spacer(modifier = Modifier.width(88.dp))
                         Button(
-                            onClick = { /*LOGOUT*/ },
+                            onClick = {
+                                auth.signOut()
+                                navController.navigate("LoginScreen")
+                            },
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = colorResource(R.color.fade_black),
                                 contentColor = colorResource(R.color.white)
@@ -114,7 +148,7 @@ fun UserProfileScreen(navController : NavHostController) {
                         contentDescription = "user_logo",
                         modifier = Modifier.size(100.dp)
                     )
-                    Text(text = "User Name", fontSize = 32.sp, fontFamily = FontFamily.Serif)
+                    Text(text = "${firstName.value} ${lastName.value}", fontSize = 32.sp, fontFamily = FontFamily.Serif)
                 }
 
 
