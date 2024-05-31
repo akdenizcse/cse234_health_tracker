@@ -28,6 +28,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -121,7 +122,7 @@ fun UserProfileScreen(navController : NavHostController) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 16.dp , horizontal = 24.dp),
+                        .padding(vertical = 16.dp, horizontal = 24.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {//personal information
                     Image(
@@ -131,13 +132,15 @@ fun UserProfileScreen(navController : NavHostController) {
                     )
                     Spacer(modifier = Modifier.width(16.dp))
                     Text(text = "Personal Information")
-                    Icon(Icons.Filled.KeyboardArrowRight, contentDescription = "")
+                    IconButton(onClick = { /*TODO*/ }) {
+                        Icon(Icons.Filled.KeyboardArrowRight, contentDescription = "")
+                    }
                 }
 
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 16.dp , horizontal = 24.dp),
+                        .padding(vertical = 16.dp, horizontal = 24.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {//notifications
                     Image(
@@ -147,13 +150,15 @@ fun UserProfileScreen(navController : NavHostController) {
                     )
                     Spacer(modifier = Modifier.width(16.dp))
                     Text(text = "Notifications")
-                    Icon(Icons.Filled.KeyboardArrowRight, contentDescription = "")
+                    IconButton(onClick = {navController.navigate("NotificationScreen") }) {
+                        Icon(Icons.Filled.KeyboardArrowRight, contentDescription = "")
+                    }
                 }
 
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 16.dp , horizontal = 24.dp),
+                        .padding(vertical = 16.dp, horizontal = 24.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {//about
                     Image(
@@ -163,7 +168,9 @@ fun UserProfileScreen(navController : NavHostController) {
                     )
                     Spacer(modifier = Modifier.width(16.dp))
                     Text(text = "About")
-                    Icon(Icons.Filled.KeyboardArrowRight, contentDescription = "")
+                    IconButton(onClick = { /*TODO*/ }) {
+                        Icon(Icons.Filled.KeyboardArrowRight, contentDescription = "")
+                    }
                 }
 
             }
