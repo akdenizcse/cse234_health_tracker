@@ -19,4 +19,12 @@
     <color name="transgreen">#1AD36C</color>
     <color name="transblue">#49AFF3</color>
     <color name="transyellow">#E3D92D</color>
+    <color name="sleep_bg">#0D195C</color>
+    <color name="running_bg">#44A9D8</color>
+    <color name="sleep_text">#FEAF62</color>
+    <color name="weight_bg">#AB2E57</color>
+    <color name="energy_bg">#8DFFA46B</color>
+    <color name="weight_text">#132745</color>
+    <color name="energy_text">#FEE45A</color>
+    <color name="energy_bg1">#E8A975</color>
 </resources>
