@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
@@ -64,10 +65,11 @@ fun NotificationScreen(navController: NavHostController) {
             )
         }
         Spacer(modifier = Modifier.height(60.dp))
-        Row() {
-            Spacer(modifier = Modifier.width(20.dp))
+        Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth().padding(15.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
             Column() {
-                Spacer(modifier = Modifier.height(10.dp))
                 Text(
                     text = "Allow notifications ",
                     fontWeight = FontWeight.Bold,
@@ -75,15 +77,14 @@ fun NotificationScreen(navController: NavHostController) {
                     color = colorResource(id = R.color.user_page_bg)
                 )
             }
-
-            Spacer(modifier = Modifier.width(120.dp))
             switchButton()
         }
 
-        Row {
-            Spacer(modifier = Modifier.width(20.dp))
+        Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth().padding(horizontal = 15.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
             Column {
-                Spacer(modifier = Modifier.height(10.dp))
                 Text(
                     text = "Allow step goal notifications ",
                     fontWeight = FontWeight.Bold,
@@ -91,7 +92,6 @@ fun NotificationScreen(navController: NavHostController) {
                     color = colorResource(id = R.color.user_page_bg)
                 )
             }
-            Spacer(modifier = Modifier.width(32.dp))
             switchButton()
         }
     }
