@@ -1,6 +1,4 @@
 package com.cse234.healthtracker.screens
-
-import BottomNavigationBar
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,8 +15,6 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material.icons.automirrored.twotone.ArrowForward
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.twotone.ArrowForward
 import androidx.compose.material.icons.twotone.DateRange
@@ -30,11 +26,15 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -45,11 +45,27 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.cse234.assets.screens.BottomNavigationBar
 import com.cse234.healthtracker.R
 import com.cse234.healthtracker.viewmodels.ActivityViewModel
+import kotlinx.coroutines.launch
 
 @Composable
-fun ActivitiesScreen(navController : NavHostController, activityViewModel: ActivityViewModel) {
+fun ActivitiesScreen(navController : NavHostController , activityViewModel: ActivityViewModel) {
+
+    LaunchedEffect(Unit) {//aynısını energy consumption sayfasına da yaz
+        activityViewModel.clearDailyActivities()
+        activityViewModel.fetchDailyActivities()
+    }
+
+    val coroutineScope = rememberCoroutineScope()
+
+    val totalDistance = remember { mutableStateOf("0.0") }
+
+    LaunchedEffect(activityViewModel.dailyActivities.collectAsState().value) {
+        totalDistance.value = activityViewModel.calculateTotalDistance()
+    }
+
 
 
     val activities = listOf(
@@ -98,6 +114,7 @@ fun ActivitiesScreen(navController : NavHostController, activityViewModel: Activ
                         TextButton(
                             onClick = {
                                 selectedActivity.value = activity
+                                activityViewModel.selectedActivity = selectedActivity.value
                             },
                             colors = if(isSelected) {
                                 ButtonDefaults.textButtonColors(
@@ -107,8 +124,7 @@ fun ActivitiesScreen(navController : NavHostController, activityViewModel: Activ
                             } else {
                                 ButtonDefaults.textButtonColors(
                                     contentColor = colorResource(R.color.black),
-                                    containerColor = colorResource(R.color.white)
-                                )
+                                    containerColor = colorResource(R.color.white))
                             }
                         ) {
                             Text(text = activity)
@@ -123,15 +139,20 @@ fun ActivitiesScreen(navController : NavHostController, activityViewModel: Activ
                     .padding(horizontal = 24.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Image( // SELECTED ACTIVITY HISTORY
+                Image(// SELECTED ACTIVITY HISTORY
                     Icons.TwoTone.DateRange,
                     contentDescription = "",
                     modifier = Modifier.size(30.dp)
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 Text(text = "Exercise history")
-                IconButton(onClick = { /*TODO*/ }) {
-                    Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = "")
+                IconButton(onClick = {
+                    coroutineScope.launch {
+                        activityViewModel.fetchFromFireStore(activityViewModel.selectedActivity)
+                    }
+                    navController.navigate("ActivityHistoryScreen")
+                }) {
+                    Icon(Icons.Filled.KeyboardArrowRight, contentDescription = "")
                 }
             }
             Divider(modifier = Modifier
@@ -176,8 +197,8 @@ fun ActivitiesScreen(navController : NavHostController, activityViewModel: Activ
                             horizontalArrangement = Arrangement.spacedBy(30.dp),
                         ) {
                             Text(text = "total distance" , fontWeight = FontWeight.Light , fontSize = 20.sp)
-                            Icon(Icons.AutoMirrored.TwoTone.ArrowForward, contentDescription = "")
-                            Text(text = "0.00 km" , fontSize = 28.sp , overflow = TextOverflow.Visible , fontWeight = FontWeight.Light)
+                            Icon(Icons.TwoTone.ArrowForward, contentDescription = "")
+                            Text(text = totalDistance.value+"m", fontSize = 18.sp , overflow = TextOverflow.Visible , fontWeight = FontWeight.Light)
                         }
                         Button(
                             onClick = {
