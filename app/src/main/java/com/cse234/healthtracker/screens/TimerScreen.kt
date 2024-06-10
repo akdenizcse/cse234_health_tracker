@@ -218,7 +218,6 @@ fun pauseButton(onPauseClick: () -> Unit){
 fun stopButton(onStopClick: () -> Unit , activityViewModel: ActivityViewModel, timerViewModel: TimerViewModel){
     IconButton(
         onClick = {
-            onStopClick()
             val data = activityViewModel.userId?.let {
                 ActivityData(
                     userId = activityViewModel.userId,
@@ -230,6 +229,7 @@ fun stopButton(onStopClick: () -> Unit , activityViewModel: ActivityViewModel, t
                     date = Date()
                 )
             }
+            onStopClick()
             data?.let {
                 activityViewModel.loadDataToFireStore(data)
             }

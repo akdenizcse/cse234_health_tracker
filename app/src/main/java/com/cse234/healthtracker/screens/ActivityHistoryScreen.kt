@@ -1,5 +1,7 @@
 package com.cse234.healthtracker.screens
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -9,8 +11,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -19,7 +23,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -38,23 +45,32 @@ fun ActivityHistoryScreen(activityViewModel: ActivityViewModel, navController: N
     Column (
         modifier = Modifier
             .fillMaxSize()
-            .padding(30.dp)
+            .background(color = colorResource(R.color.login_bg))
+            .padding(30.dp),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally
     ){
         Text(
             text = "Activity History : ${activityViewModel.selectedActivity}",
-            modifier = Modifier.padding(start = 10.dp , top = 16.dp),
-            fontSize = 24.sp,
+            modifier = Modifier.padding(top = 20.dp),
+            fontSize = 28.sp,
             fontWeight = FontWeight.Bold
         )
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(20.dp))
         if (activities.isEmpty()){
             Card (
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(100.dp)
-                    .padding(start = 8.dp, top = 16.dp)
+                    .padding(start = 8.dp, top = 8.dp, bottom = 8.dp)
             ){
-                Text(text = "No activities found" , color = colorResource(R.color.black))
+                Row (
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ){
+                    Text(text = "No activities found" , color = colorResource(R.color.black))
+                }
+
             }
         } else {
             LazyColumn(
@@ -76,23 +92,47 @@ fun ActivityHistoryScreen(activityViewModel: ActivityViewModel, navController: N
 fun ActivityCard(activity: ActivityData) {
 
     val dateFormat = SimpleDateFormat("dd/MM", Locale.getDefault())
+    val distanceFormatted = String.format("%.1f", activity.distance * 1000)
 
     Card(
         modifier = Modifier
-            .padding(8.dp)
             .fillMaxWidth()
+            .shadow(
+                elevation = 90.dp,
+                shape = RoundedCornerShape(30.dp),
+                clip = false,
+                ambientColor = Color.Green,
+                spotColor = colorResource(id = R.color.bottom_tab_bar)
+            )
+            .padding(8.dp)
             .height(100.dp),
         colors = CardDefaults.cardColors(
-            containerColor = colorResource(R.color.user_page_bg),
+            containerColor = colorResource(R.color.bottom_tab_bar),
             contentColor = colorResource(R.color.black)
-        )
+        ),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 50.dp
+        ),
+        shape = RoundedCornerShape(20.dp),
+        border = CardDefaults.outlinedCardBorder()
     ) {
-        Row (
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
-            verticalAlignment = Alignment.CenterVertically
+        Column (
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(start = 8.dp, top = 8.dp, bottom = 8.dp),
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.Start
         ){
-            Text(text =activity.activityType , fontSize = 16.sp , fontWeight = FontWeight.Bold)
-            Text(text = dateFormat.format(activity.date), fontSize = 16.sp , fontWeight = FontWeight.Bold)
+            Row (
+                horizontalArrangement = Arrangement.spacedBy(15.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                Text(text =activity.activityType , fontSize = 25.sp , fontWeight = FontWeight.Bold , fontFamily = FontFamily.SansSerif , color = colorResource(R.color.weight_bg))
+                Text(text = dateFormat.format(activity.date)+"/2024", fontSize = 20.sp , fontWeight = FontWeight.Bold , fontFamily = FontFamily.SansSerif, color = colorResource(R.color.weight_text))
+            }
+            Text(text = "Duration : ${activity.duration} seconds" , fontSize = 16.sp , fontWeight = FontWeight.Bold , fontFamily = FontFamily.SansSerif , color = colorResource(R.color.black))
+            Text(text = "Distance : $distanceFormatted meters" , fontSize = 16.sp , fontWeight = FontWeight.Bold , fontFamily = FontFamily.SansSerif , color = colorResource(R.color.black))
+
         }
 
     }
