@@ -33,6 +33,7 @@ import com.cse234.healthtracker.screens.UserProfileScreen
 import com.cse234.healthtracker.ui.theme.HealthTrackerProjectTheme
 import com.cse234.healthtracker.viewmodels.ActivityViewModel
 import com.cse234.healthtracker.viewmodels.TimerViewModel
+import com.google.firebase.FirebaseApp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
