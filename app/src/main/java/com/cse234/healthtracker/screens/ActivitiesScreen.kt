@@ -1,5 +1,6 @@
 package com.cse234.healthtracker.screens
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,6 +16,8 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.automirrored.twotone.ArrowForward
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.twotone.ArrowForward
 import androidx.compose.material.icons.twotone.DateRange
@@ -37,6 +40,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -51,7 +56,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun ActivitiesScreen(navController : NavHostController , activityViewModel: ActivityViewModel) {
 
-    LaunchedEffect(Unit) {//aynısını energy consumption sayfasına da yaz
+    LaunchedEffect(Unit) {
         activityViewModel.clearDailyActivities()
         activityViewModel.fetchDailyActivities()
     }
@@ -150,7 +155,7 @@ fun ActivitiesScreen(navController : NavHostController , activityViewModel: Acti
                     }
                     navController.navigate("ActivityHistoryScreen")
                 }) {
-                    Icon(Icons.Filled.KeyboardArrowRight, contentDescription = "")
+                    Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = "")
                 }
             }
             Divider(modifier = Modifier
@@ -169,12 +174,23 @@ fun ActivitiesScreen(navController : NavHostController , activityViewModel: Acti
                         .height(410.dp)
                         .padding(vertical = 16.dp, horizontal = 24.dp),
                     colors = CardDefaults.cardColors(
-                        containerColor = colorResource(R.color.fade_black),
+                        containerColor = Color.Transparent,
                         contentColor = colorResource(R.color.black)
                     ),
                 ){
                     Column(
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(
+                                        colorResource(R.color.start_exercise1),
+                                        colorResource(R.color.start_exercise2),
+                                        colorResource(R.color.start_exercise3),
+                                        colorResource(R.color.start_exercise4)
+                                    )
+                                )
+                            )
                     ){
                         Text(text = "Start Exercise",
                             modifier = Modifier
@@ -192,10 +208,10 @@ fun ActivitiesScreen(navController : NavHostController , activityViewModel: Acti
                         Row(
                             modifier = Modifier.padding(start = 24.dp, top = 16.dp) ,
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(30.dp),
+                            horizontalArrangement = Arrangement.spacedBy(10.dp),
                         ) {
-                            Text(text = "total distance" , fontWeight = FontWeight.Light , fontSize = 20.sp)
-                            Icon(Icons.TwoTone.ArrowForward, contentDescription = "")
+                            Text(text = "today's total distance" , fontWeight = FontWeight.Light , fontSize = 20.sp)
+                            Icon(Icons.AutoMirrored.TwoTone.ArrowForward, contentDescription = "")
                             Text(text = totalDistance.value+"m", fontSize = 18.sp , overflow = TextOverflow.Visible , fontWeight = FontWeight.Light)
                         }
                         Button(
@@ -209,12 +225,12 @@ fun ActivitiesScreen(navController : NavHostController , activityViewModel: Acti
                                 .padding(horizontal = 24.dp)
                                 .height(100.dp),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = colorResource(R.color.teal_700),
+                                containerColor = colorResource(R.color.start_exercise1),
                                 contentColor = colorResource(R.color.black)
 
                             )
                         ) {
-                            Text(text = "NEW ACTIVITY" , fontSize = 24.sp , fontWeight = FontWeight.Light)
+                            Text(text = "START ACTIVITY" , fontSize = 24.sp , fontWeight = FontWeight.Bold , fontFamily = FontFamily.Serif)
                         }
 
                     }

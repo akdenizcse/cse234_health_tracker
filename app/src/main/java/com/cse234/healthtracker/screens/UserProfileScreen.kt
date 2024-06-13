@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.sharp.AccountCircle
@@ -164,7 +165,7 @@ fun UserProfileScreen(navController : NavHostController) {
                     IconButton(onClick = {
                         navController.navigate("PersonalInfoScreen")
                     }) {
-                        Icon(Icons.Filled.KeyboardArrowRight, contentDescription = "")
+                        Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = "")
                     }
                 }
 
@@ -182,7 +183,7 @@ fun UserProfileScreen(navController : NavHostController) {
                     Spacer(modifier = Modifier.width(16.dp))
                     Text(text = "Notifications")
                     IconButton(onClick = {navController.navigate("NotificationScreen") }) {
-                        Icon(Icons.Filled.KeyboardArrowRight, contentDescription = "")
+                        Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = "")
                     }
                 }
 
@@ -199,8 +200,10 @@ fun UserProfileScreen(navController : NavHostController) {
                     )
                     Spacer(modifier = Modifier.width(16.dp))
                     Text(text = "About")
-                    IconButton(onClick = { /*TODO*/ }) {
-                        Icon(Icons.Filled.KeyboardArrowRight, contentDescription = "")
+                    IconButton(onClick = {
+                        navController.navigate("AboutScreen")
+                    }) {
+                        Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = "")
                     }
                 }
 
