@@ -50,14 +50,14 @@ class LoginViewModel(private val context : Context , private val navController: 
                             .set(userInfo)
                             .addOnSuccessListener {
                                 Log.d("db_signUp", "user credentials have been stored in the database")
-                                Toast.makeText(context, "db operation successful", Toast.LENGTH_SHORT).show()
-                                navController.navigate("HomeScreen")
+                                Toast.makeText(context, "successful", Toast.LENGTH_SHORT).show()
+                                navController.navigate("LoginScreen")
                                 isLoading = false
                             }
                             .addOnFailureListener {
                                 Log.d("db_signUp", "user credentials could not be stored in the database")
                                 Log.d("db_signUp", "error : ${it.message}")
-                                Toast.makeText(context, "db operation not successful", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "not successful", Toast.LENGTH_SHORT).show()
                                 isLoading = false
                             }
 

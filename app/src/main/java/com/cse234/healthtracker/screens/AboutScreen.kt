@@ -3,14 +3,18 @@ package com.cse234.healthtracker.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
@@ -34,14 +38,28 @@ fun AboutScreen(navController: NavHostController) {
         modifier = Modifier
             .fillMaxSize()
             .background(color = colorResource(id = R.color.login_bg))
-            .padding(20.dp),
+            .padding(30.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Row (
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start
+        ){
+            IconButton(onClick = {
+                if (navController.previousBackStackEntry != null) {
+                    navController.navigateUp()
+                }
+            }) {
+                Icon(imageVector = Icons.AutoMirrored.Rounded.ArrowBack, contentDescription ="" )
+            }
+        }
         Image(painter = painterResource(id = R.drawable.better_health) , contentDescription = "")
         Card(
             modifier = Modifier
                 .size(400.dp, 230.dp)
-                .background(color = Color.LightGray)
+                .background(color = Color.LightGray),
+            shape = RoundedCornerShape(10.dp)
         ) {
             Column(
                 Modifier
@@ -64,7 +82,8 @@ fun AboutScreen(navController: NavHostController) {
         Card(
             modifier = Modifier
                 .size(400.dp, 240.dp)
-                .background(color = Color.LightGray)
+                .background(color = Color.LightGray),
+            shape = RoundedCornerShape(10.dp)
         ) {
             Column(
                 Modifier
@@ -87,14 +106,5 @@ fun AboutScreen(navController: NavHostController) {
         }
 
     }
-    Row (Modifier.fillMaxSize().padding(horizontal = 3.dp, vertical = 5.dp)){
 
-        IconButton(onClick = {
-            if (navController.previousBackStackEntry != null) {
-                navController.popBackStack()
-            }
-        }) {
-            Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "")
-        }
-    }
 }
