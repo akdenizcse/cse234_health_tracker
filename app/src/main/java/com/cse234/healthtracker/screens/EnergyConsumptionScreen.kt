@@ -94,7 +94,7 @@ fun EnergyConsumptionScreen(activityViewModel: ActivityViewModel, navController 
             }) {
                 Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "")
             }
-            Text(text = "Today's Statics" , fontSize = 24.sp, fontWeight = FontWeight.Bold)
+            Text(text = "Today's Statistics" , fontSize = 24.sp, fontWeight = FontWeight.Bold)
         }
         Row (
             modifier = Modifier
