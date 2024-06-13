@@ -142,8 +142,7 @@ fun ActivityCard(activity: ActivityData) {
         elevation = CardDefaults.cardElevation(
             defaultElevation = 50.dp
         ),
-        shape = RoundedCornerShape(30.dp),
-        border = CardDefaults.outlinedCardBorder()
+        shape = RoundedCornerShape(30.dp)
     ) {
         Column (
             modifier = Modifier
