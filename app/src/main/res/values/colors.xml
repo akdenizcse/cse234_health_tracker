@@ -11,7 +11,7 @@
     <color name="login_bg">#433D3D</color>
     <color name="green">#00B65E</color>
     <color name="white">#FFFFFF</color>
-    <color name="bottom_tab_bar">#D5D1A6</color>
+    <color name="bottom_tab_bar">#E4504905</color>
     <color name="user_page_bg">#EDBC7C</color>
     <color name="fade_black">#F24A4337</color>
     <color name="home_screen_bg">#F232291B</color>
@@ -27,4 +27,30 @@
     <color name="weight_text">#132745</color>
     <color name="energy_text">#FEE45A</color>
     <color name="energy_bg1">#E8A975</color>
+    <color name="gray">#6C6262</color>
+
+    <color name="key_points">#AD88C6</color>
+    <color name="tableblue">#BF8897CF</color>
+    <color name="sleepbg">#7469B6</color>
+
+    <color name="bottom1">#FEFFD2</color>
+    <color name="bottom2">#FFEEA9</color>
+    <color name="bottom3">#FFBF78</color>
+    <color name="bottom4">#FF7D29</color>
+
+    <color name ="start_exercise1">#FFC94A</color>
+    <color name ="start_exercise2">#C08B5C</color>
+    <color name ="start_exercise3">#795458</color>
+    <color name ="start_exercise4">#D8EFD3</color>
+
+    <color name="activity_card1">#3AA6B9</color>
+    <color name="activity_card2">#7FC7D9</color>
+    <color name="activity_card3">#DCF2F1</color>
+    <color name="activity_card4">#F9F9E0</color>
+
+
+
+
+
+
 </resources>

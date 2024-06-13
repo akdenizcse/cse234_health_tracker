@@ -1,6 +1,6 @@
-package com.cse234.assets.screens
+package com.cse234.healthtracker.screens
 
-import android.widget.ImageButton
+import android.util.Log
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,49 +19,39 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBox
-import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.automirrored.sharp.List
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.sharp.List
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableDoubleStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -70,11 +59,28 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.cse234.healthtracker.R
 import com.cse234.healthtracker.data.BottomNavItem
+import com.cse234.healthtracker.viewmodels.ActivityViewModel
 
 
 @Composable
-fun HomeScreen(navController: NavHostController) {
+fun HomeScreen(navController: NavHostController , activityViewModel: ActivityViewModel) {
+    LaunchedEffect(Unit) {
+        Log.d("HomeScreen", "LaunchedEffect")
+        activityViewModel.clearDailyActivities()
+        activityViewModel.fetchDailyActivities()
+    }
 
+    val totalDistance = remember { mutableStateOf("0.0") }
+    val totalDuration = remember { mutableStateOf("0")}
+    val totalSteps = remember { mutableIntStateOf(0) }
+    val totalCaloriesBurned = remember { mutableDoubleStateOf(0.0) }
+
+    LaunchedEffect(activityViewModel.dailyActivities.collectAsState().value) {
+        totalDistance.value = activityViewModel.calculateTotalDistance().replace(",", ".")
+        totalDuration.value = activityViewModel.calculateTotalDuration().replace(",", ".")
+        totalSteps.intValue = calculateEstimatedSteps(totalDistance.value.toDouble())
+        totalCaloriesBurned.doubleValue = calculateEstimatedCaloriesBurned(totalDuration.value.toLong())
+    }
     Scaffold(
         bottomBar = {
             BottomNavigationBar(navController = navController, onItemClick = { navController.navigate(it.route)})
@@ -273,7 +279,7 @@ fun BottomNavigationBar(
     val backStackEntry = navController.currentBackStackEntryAsState()
     val items : List<BottomNavItem> = listOf(
         BottomNavItem("Home", "HomeScreen", Icons.Filled.Home),
-        BottomNavItem("Activities", "ActivitiesScreen", Icons.Sharp.List),
+        BottomNavItem("Activities", "ActivitiesScreen", Icons.AutoMirrored.Sharp.List),
         BottomNavItem("User", "UserProfileScreen", Icons.Filled.Person)
     )
     NavigationBar (

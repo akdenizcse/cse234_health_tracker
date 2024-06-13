@@ -101,11 +101,17 @@ class ActivityViewModel : ViewModel(){
     fun calculateTotalDistance() : String {
         val totalDistance = dailyActivities.value.sumOf { it.distance }
         Log.d("total_distance", "${totalDistance *1000} m calculated")
-        return String.format("%.1f", totalDistance*1000)
+        return  String.format("%.1f", totalDistance * 1000).replace(",", ".")
     }
 
     fun clearDailyActivities(){
         _dailyActivities.value = emptyList()
+    }
+
+    fun calculateTotalDuration() : String {
+        val totalDuration = dailyActivities.value.sumOf { it.duration }
+        Log.d("total_duration", "$totalDuration seconds calculated")
+        return totalDuration.toString()
     }
 
 }
