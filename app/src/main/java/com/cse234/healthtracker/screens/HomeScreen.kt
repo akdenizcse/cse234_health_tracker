@@ -264,7 +264,7 @@ private fun HomeScreenTopCard(navController: NavHostController ,totalDuration : 
             border = CardDefaults.outlinedCardBorder(),
             shape = RoundedCornerShape(20.dp),
             colors = CardDefaults.cardColors(
-                containerColor = colorResource(id = R.color.energy_bg),
+                containerColor = colorResource(id = R.color.energy_bg1),
                 contentColor = Color.Black
             ),
             elevation = CardDefaults.cardElevation(16.dp)

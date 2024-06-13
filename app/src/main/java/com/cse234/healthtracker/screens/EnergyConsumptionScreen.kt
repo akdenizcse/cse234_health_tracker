@@ -234,7 +234,7 @@ fun EnergyConsumptionScreen(activityViewModel: ActivityViewModel, navController 
                     Image(painter = painterResource(R.drawable.calories), contentDescription ="" , modifier = Modifier.size(60.dp))
                 }
             }
-            Text(text = totalCaloriesBurned.doubleValue.toString(), fontSize = 36.sp, fontWeight = FontWeight.Bold , fontFamily = FontFamily.Serif , color = Color.White)
+            Text(text = String.format("%.1f",totalCaloriesBurned.doubleValue).replace(",", "."), fontSize = 36.sp, fontWeight = FontWeight.Bold , fontFamily = FontFamily.Serif , color = Color.White)
             Spacer(modifier =Modifier.width(5.dp))
             Text(text = "kcal" , fontSize = 17.sp, fontWeight = FontWeight.Thin , fontFamily = FontFamily.Serif)
         }
